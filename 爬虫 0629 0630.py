@@ -87,7 +87,7 @@ def get_order(num):
         main_html = getHtml(url)
         clean_content = main_content(main_html)         
         url_list = url_list + page_url(clean_content, num)  
-    for i in range(1, page+1): # 需这里需要尾巴
+    for i in range(1, page+1): 
         url = 'http://bohaishibei.com/post/category/main/page/%d' % i # 爬取整页的条目
         main_html = getHtml(url)
         clean_content = main_content(main_html)
