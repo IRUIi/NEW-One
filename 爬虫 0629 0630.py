@@ -117,7 +117,7 @@ def get_order(num):
             clean_content = main_content(main_html)         
             url_list = url_list + page_url(clean_content, order)            
     return url_list
-order = get_order(30) # get_order方法接受参数，抓取多少期的数据，return了url_list
+order = get_order(30) # get_order方法接受参数，抓取多少期的数据，return了url_list 30代表着要查询的期数，可变；
 for i in order:  # 遍历列表的方法
     html = getHtml(i)   #getHtml(url_list)         
     content_data = content(html)
