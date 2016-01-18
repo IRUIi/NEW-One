@@ -3,18 +3,19 @@ import urllib
 import MySQLdb
 
 def getHtml(url):
-    # 获取网页内容
+    # 获取网页内容，获得其HTML
     page = urllib.urlopen(url)
     html = page.read()
     return html
 def content(html): 
+    # 从HTML中得到我们想要的包含我们想要的信息的目录
     str = '<article class="article-content">'# 我们想要得到的内容是在这个目录标签下的
     content = html.partition(str)[2]# partition() 方法用来根据指定的分隔符将字符串进行分割。这里，取三段中的最后一段
     str1= '<div class="article-social">'
     content = content.partition(str1)[0] # 在content目录中取第一段，赋值;就是取得是str后面的加上str1前面的内容
     return content
 def title(content,beg=0):
-    # 完成title的抓取，利用str.index()函数和序列的切片方法。
+    # 从content中完成title的抓取。利用str.index()函数和序列的切片方法。
     try:
         title_list=[]
         while True:
@@ -25,7 +26,7 @@ def title(content,beg=0):
     except ValueError:
             return title_list
 def get_img(content,beg=0):
-    # 匹配图片的url,还是运用str.index()和序列切片
+    # 从content中匹配图片的url,还是运用str.index()和序列切片
     try:
         img_list=[]
         while True:
@@ -37,7 +38,7 @@ def get_img(content,beg=0):
             return img_list
         
 def many_img(data,beg = 0):
-    # 用于匹配多图的url
+    # 判断是否多图；用于匹配多图的url
     try:
         many_img_str = ''
         while True:
@@ -73,8 +74,8 @@ def data_out(title, img):
                 img[size] = many_img(img[size])# 多图，调用many_img()方法
             fo.write(title[size]+'$'+img[size]+'\n')# 将标题和图的
         
-def main_content(html):#方法用来随意取想看的期数来看
-# 首页内容分割的标签,用来分割首页
+def main_content(html):
+# 仅仅第一页得到它的HTML，用于后面的算法中，要查询的期数小于20时，即只有一页时。
     str = '<div class="content">'
     content = html.partition(str)[2]
     str1 = '</div>'
@@ -95,11 +96,11 @@ def page_url(content, order = 20, beg = 0):# 新增一个参数order，默认为
     except ValueError:
         return url   
 def get_order(num):
-# num代表获取的条目数量，可以改变，就是想看几期，一期就是一条
+# num代表获取的条目数量，可以改变，就是想看几期，一期有很多条
     url_list = []
-    page = num / 20 # 每一页有20条
-    order = num % 20 # 超出一整页的条目
-    if num < 20:  # 如果获取的条目数量少于20（一页20个），直接爬取第一页的num条
+    page = num / 20 # 每一页有20期，页数
+    order = num % 20 # 超出一整页的期数
+    if num < 20:  # 如果获取的期数数量少于20（一页20个），直接爬取第一页的num条
         url = 'http://bohaishibei.com/post/category/main'
         main_html = getHtml(url)
         clean_content = main_content(main_html)  # 打开首页，得到网页信息        
