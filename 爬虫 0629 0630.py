@@ -82,7 +82,7 @@ def main_content(html):
     content = content.partition(str1)[0]
     return content # 得到网页的内容   
 
-def page_url(content, order = 20, beg = 0):# 新增一个参数order，默认为20，因为每页20条，分页。
+def page_url(content, order = 20, beg = 0):# 新增一个参数order，默认为20，因为每页20条，分页。它代表着每一页。
     try:
         url = []
         i = 0
